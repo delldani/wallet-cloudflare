@@ -132,29 +132,6 @@ const encodePass = async pass => {
 
 /**
  * Login endpoint, which generates a session token on success
- *
- */
-async function test(me, data) {
-  // try {
-  //   login = await read(`auth_${`${data.name}`.toLowerCase().trim()}`)
-  // } catch (err) {
-  //   throw new Error('Cannot find this user!')
-  // }
-  // if (login.password !== (await encodePass(data.password))) {
-  //   throw new Error('Wrong password!')
-  // }
-  // const user = await read(`user_${login.id}`)
-  // const token = `${login.id}_${genId()}`
-
-  let value = await WALLET.get('aaa')
-
-  return {
-    test: `${data.name}`,
-  }
-}
-
-/**
- * Login endpoint, which generates a session token on success
  * @param me
  * @param data
  * @returns {Promise<{user: *, token: string}>}
