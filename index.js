@@ -131,6 +131,22 @@ const encodePass = async pass => {
 }
 
 /**
+ * List users
+ * @param me
+ * @param data
+ * @returns {Promise<{user: *, token: string}>}
+ */
+async function list(me, data) {
+  if (me) {
+    throw new Error('Already logged in!')
+  }
+
+  return {
+    valami: 'valami',
+  }
+}
+
+/**
  * Login endpoint, which generates a session token on success
  * @param me
  * @param data
@@ -524,7 +540,7 @@ async function resolveAuthorization(token) {
 }
 
 const ROUTE_MAP = [
-  ['POST', /^test$/, test],
+  ['POST', /^test$/, list],
   ['POST', /^login$/, login],
   ['POST', /^reg$/, reg],
   [
