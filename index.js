@@ -281,12 +281,12 @@ async function createWallet(me, data) {
     },
     created_at: now(),
   }
-  // me.wallets.push({
-  //   id: item.id,
-  //   name: item.name,
-  // })
+  me.wallets.push({
+    id: item.id,
+    name: item.name,
+  })
   await write(`wallet_${item.id}`, item)
-  // await write(`user_${me.id}`, me)
+  await write(`user_${me.id}`, me)
   return item
 }
 
