@@ -1,0 +1,11 @@
+name = "wallet-cloudflare"
+type = "webpack"
+
+account_id = "f014c6e7add3694d80b4e0b4a237eb45"
+workers_dev = true
+route = ""
+zone_id = ""
+compatibility_date = "2022-03-29"
+kv_namespaces = [ 
+  { binding = "WALLET", id = "fb2df776c0b3482f926a863f16095963" }
+]
