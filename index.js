@@ -131,18 +131,19 @@ const encodePass = async pass => {
 }
 
 /**
- * List users
+ * List all the keys in db
  * @param me
- * @param data
  * @returns {Promise<{user: *, token: string}>}
  */
-async function list(me, data) {
+async function list(me) {
   if (me) {
     throw new Error('Already logged in!')
   }
 
+  const list = await read('names')
+
   return {
-    valami: 'valami',
+    list,
   }
 }
 
@@ -208,6 +209,14 @@ async function reg(me, data) {
     id: newUser.id,
     password: await encodePass(`${data.password}`),
   }
+
+  let namesArray = await read('names')
+  namesArray.push({
+    id: genId(),
+    name: `${data.name}`,
+    job: `${data.job}`,
+  })
+  await write('names', namesArray)
   await write(`auth_${name}`, newAuth)
   await write(`user_${newUser.id}`, newUser)
   return newUser
@@ -540,7 +549,7 @@ async function resolveAuthorization(token) {
 }
 
 const ROUTE_MAP = [
-  ['POST', /^test$/, list],
+  ['GET', /^list$/, list],
   ['POST', /^login$/, login],
   ['POST', /^reg$/, reg],
   [
