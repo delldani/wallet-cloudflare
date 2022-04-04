@@ -208,6 +208,7 @@ async function reg(me, data) {
   const newUser = {
     id: genId(),
     name: `${data.name}`,
+    job: `${data.job}`,
     wallets: [],
   }
   const newAuth = {
