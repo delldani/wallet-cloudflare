@@ -199,20 +199,23 @@ async function reg(me, data) {
   if (hasAlready !== false) {
     throw new Error('Name is already in use!')
   }
+  const newId = genId()
+
   const newUser = {
-    id: genId(),
+    id: newId,
     name: `${data.name}`,
     job: `${data.job}`,
     wallets: [],
   }
+
   const newAuth = {
-    id: newUser.id,
+    id: newId,
     password: await encodePass(`${data.password}`),
   }
 
   let namesArray = await read('names')
   namesArray.push({
-    id: genId(),
+    id: newId,
     name: `${data.name}`,
     job: `${data.job}`,
   })
