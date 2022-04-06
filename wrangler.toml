@@ -7,5 +7,5 @@ route = ""
 zone_id = ""
 compatibility_date = "2022-03-29"
 kv_namespaces = [ 
- { binding = "WALLET", id = "2d7ec8d3cfaf4bb9847178f646801de8" }
+ { binding = "WALLET", id = "2d7ec8d3cfaf4bb9847178f646801de8" ,preview_id="2d7ec8d3cfaf4bb9847178f646801de8" }
 ]

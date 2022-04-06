@@ -108,6 +108,7 @@ const grabProtectedWallet = async (me, walletId) => {
   protect(me)
   const key = `wallet_${walletId}`
   const item = await read(key)
+
   if (!item.access.map(e => e.id).includes(me.id)) {
     throw new Error('Cannot access this wallet!')
   }
@@ -168,7 +169,6 @@ async function login(me, data) {
   }
   const user = await read(`user_${login.id}`)
   const token = `${login.id}_${genId()}`
-
   return {
     token: `${token}_${await encodePass(`${token}`)}`,
     user,
@@ -272,6 +272,10 @@ async function createWallet(me, data) {
     // instant access to the creator
     access: [
       {
+        id: me.id,
+        name: me.name,
+      },
+      {
         id: data.id,
         name: data.name,
       },
@@ -288,6 +292,18 @@ async function createWallet(me, data) {
     id: item.id,
     name: item.name,
   })
+
+  //új wallet esetén nemcsak az igazgatónak a wallet-jei közé kerül be, hanem akinek a nevére került a wallet
+  const user = await read(`user_${data.id}`)
+  user.wallets = [
+    ...user.wallets,
+    {
+      id: item.id,
+      name: item.name,
+    },
+  ]
+  await write(`user_${data.id}`, user)
+
   await write(`wallet_${item.id}`, item)
   await write(`user_${me.id}`, me)
   return item
@@ -431,7 +447,6 @@ async function listTransactions(me, data) {
     limit,
     cursor: data.cursor,
   })
-
   const ids = alltransactions.keys.map(e => e.name)
   const transactions = []
   for (let i = 0; i < ids.length; i++) {
