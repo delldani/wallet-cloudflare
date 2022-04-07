@@ -542,6 +542,7 @@ async function updateTransaction(me, data) {
  * @returns {Promise<*>}
  */
 async function deleteTransaction(me, data) {
+  console.log(data.id)
   const itemKey = `transaction_${data.id}`
   const item = await read(itemKey)
   // to check the access
