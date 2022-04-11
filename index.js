@@ -98,6 +98,8 @@ const protect = me => {
   }
 }
 
+
+
 /**
  * Grab a wallet from KV
  * @param me
@@ -182,6 +184,12 @@ async function login(me, data) {
  * @returns {Promise<{name: string, wallets: *[], id: string}>}
  */
 async function reg(me, data) {
+
+  const namesKey = await  WALLET.get('names'); 
+  if(namesKey === null){
+    write('names',[]);
+  };
+
   const NAME_REGEX = /^[0-9a-zA-Z]*$/g
   if (me) {
     throw new Error('Already logged in!')
@@ -201,10 +209,12 @@ async function reg(me, data) {
   }
   const newId = genId()
 
+  const job = data.name === 'igazgato' ? 'director' : data.job;
+
   const newUser = {
     id: newId,
     name: `${data.name}`,
-    job: `${data.job}`,
+    job: job,
     wallets: [],
   }
 
@@ -217,7 +227,7 @@ async function reg(me, data) {
   namesArray.push({
     id: newId,
     name: `${data.name}`,
-    job: `${data.job}`,
+    job: job,
   })
   await write('names', namesArray)
   await write(`auth_${name}`, newAuth)
